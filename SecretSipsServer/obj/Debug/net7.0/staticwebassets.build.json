@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "XXcB+Lx79GyAnSybmpjopa1vw+WkEA597cC2/0lyIVs=",
+  "Source": "SecretSipsServer",
+  "BasePath": "_content/SecretSipsServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
