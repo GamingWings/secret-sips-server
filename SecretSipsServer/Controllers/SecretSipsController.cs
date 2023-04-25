@@ -2,66 +2,88 @@ using System.Net.WebSockets;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using SecretSipsServer.DAOs;
+using SecretSipsServer.Models;
 
 namespace SecretSipsServer.Controllers;
 
+/// <summary>
+/// 
+/// </summary>
 [ApiController]
 [Route("[controller]")]
-public class SecretSipsController : ControllerBase, IActionFilter
+public class SecretSipsController : ControllerBase
 {
-    private readonly ILogger<SecretSipsController> _logger;
+    private readonly ILogger<SecretSipsController> logger;
+    private readonly Random random = new Random();
+    private readonly GameDAO dao;
 
-    public SecretSipsController(ILogger<SecretSipsController> logger)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="dao"></param>
+    public SecretSipsController(ILogger<SecretSipsController> logger, GameDAO dao)
     {
-        _logger = logger;
+        this.logger = logger;
+        this.dao = dao;
     }
 
-    public void OnActionExecuting(ActionExecutingContext context)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPost("Create")]
+    public async Task<ActionResult> Create([FromBody] CreateGameRequest request)
     {
-        if (!HttpContext.WebSockets.IsWebSocketRequest)
+        var code = await GenerateCode();
+        var game = new Game
         {
-            context.Result = BadRequest(); // Sets the response status code to 400 and returns immediately
-        }
+            Code = code,
+            Rounds = request.Rounds,
+            IsStarted = false,
+            Users = new List<User>(),
+            CurrentRound = 1,
+            MinSecrets = request.MinSecrets,
+            TimerLength = request.TimerLength
+        };
+        await dao.CreateGame(game);
+        return Ok(code);
     }
 
-    public void OnActionExecuted(ActionExecutedContext context) { }
-
-
+    /// <summary>
+    /// 
+    /// </summary>
     [HttpGet("Join")]
-    public async Task Join()
+    public async Task Join([FromQuery] string UserName, [FromQuery] string Code)
     {
-        Console.WriteLine("Received new connection");
+        logger.LogInformation("Received new connection");
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
-            Console.WriteLine("Connection is Websocket");
+            logger.LogInformation("Connection is Websocket");
             using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-            var buffer = new byte[1024 * 4];
-            var message = Encoding.UTF8.GetBytes("Hello World");
-            await webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Text, true, CancellationToken.None);
         }
         else
         {
-            Console.WriteLine("Connection is not Websocket");
+            logger.LogWarning("Connection is not a Websocket");
             HttpContext.Response.StatusCode = 400;
         }
     }
 
-    [HttpGet("Create")]
-    public async Task Create()
+    private async Task<string> GenerateCode()
     {
-        Console.WriteLine("Received new connection");
-        if (HttpContext.WebSockets.IsWebSocketRequest)
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Game? game = null;
+        var code = "";
+        do
         {
-            Console.WriteLine("Connection is Websocket");
-            using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-            var buffer = new byte[1024 * 4];
-            var message = Encoding.UTF8.GetBytes("Hello World");
-            await webSocket.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-        else
-        {
-            Console.WriteLine("Connection is not Websocket");
-            HttpContext.Response.StatusCode = 400;
-        }
-    }
+            code = new string(Enumerable.Repeat(chars, 6)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+            game = await dao.GetGame(code);
+        } while (game != null);
+
+        return code;
+
+    } 
 }

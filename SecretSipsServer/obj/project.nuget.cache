@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XlkZmmbU8BCMvvTaFYJHWhOQnKIfunVcXo5YRn/9dF0CEbTYPDIEeG90MVDqdKyubXkW5/fqG/B57asW93zQug==",
+  "dgSpecHash": "G0iU+LvVdnUiB1ZnmelPVLFvh2BIh771m7xfE19GfZY2MOz/b52GFNnpFy/fVS1xJZVnxoNYmZHXppGe3InHPA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sean\\secret-sips-server\\SecretSips\\SecretSipsServer\\SecretSipsServer.csproj",
+  "projectFilePath": "C:\\Users\\Sean\\secret-sips-server-temp\\SecretSipsServer\\SecretSipsServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sean\\.nuget\\packages\\microsoft.aspnetcore.http\\2.2.2\\microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "C:\\Users\\Sean\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

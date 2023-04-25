@@ -951,11 +951,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sean\\secret-sips-server\\SecretSips\\SecretSipsServer\\SecretSipsServer.csproj",
+      "projectUniqueName": "C:\\Users\\Sean\\secret-sips-server-temp\\SecretSipsServer\\SecretSipsServer.csproj",
       "projectName": "SecretSipsServer",
-      "projectPath": "C:\\Users\\Sean\\secret-sips-server\\SecretSips\\SecretSipsServer\\SecretSipsServer.csproj",
+      "projectPath": "C:\\Users\\Sean\\secret-sips-server-temp\\SecretSipsServer\\SecretSipsServer.csproj",
       "packagesPath": "C:\\Users\\Sean\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sean\\secret-sips-server\\SecretSips\\SecretSipsServer\\obj\\",
+      "outputPath": "C:\\Users\\Sean\\secret-sips-server-temp\\SecretSipsServer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Sean\\AppData\\Roaming\\NuGet\\NuGet.Config",
