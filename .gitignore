@@ -1,0 +1,7 @@
+.vs
+[Bb]in/
+[Oo]bj/
+publish
+.idea
+.env
+*.sln.DotSettings.user
