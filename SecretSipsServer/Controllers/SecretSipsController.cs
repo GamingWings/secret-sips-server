@@ -49,7 +49,7 @@ public class SecretSipsController : ControllerBase
             TimerLength = request.TimerLength
         };
         await dao.CreateGame(game);
-        return Ok(code);
+        return Ok(game);
     }
 
     /// <summary>
@@ -63,6 +63,7 @@ public class SecretSipsController : ControllerBase
         {
             logger.LogInformation("Connection is Websocket");
             using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+            // Draw the rest of the fucking owl
         }
         else
         {
