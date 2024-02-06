@@ -13,4 +13,6 @@ public class CreateGameRequest
     
     [Required]
     public int TimerLength { get; set; }
+    
+    public string UserName {get; set; }
 }

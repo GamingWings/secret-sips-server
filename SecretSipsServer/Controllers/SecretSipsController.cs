@@ -43,7 +43,7 @@ public class SecretSipsController : ControllerBase
             Code = code,
             Rounds = request.Rounds,
             IsStarted = false,
-            Users = new List<User>(),
+            Users = new List<User>{new User {UserName = request.UserName}},
             CurrentRound = 1,
             MinSecrets = request.MinSecrets,
             TimerLength = request.TimerLength
