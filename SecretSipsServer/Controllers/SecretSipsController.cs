@@ -89,15 +89,14 @@ public class SecretSipsController : ControllerBase
     } 
 
     private async Task GameLoop(Game game, User user) 
-    {
+    {&
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
             logger.LogInformation("Connection is Websocket");
             using var Socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
             user.Socket = Socket;
             game.Users = game.Users.Append(user);
-            var gameString = JsonSerializer.Serialize(game);
-            var message = Encoding.UTF8.GetBytes(gameString);
+            var message = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(game));
             game.Users.ToList().ForEach(async user => await user.Socket.SendAsync(message, WebSocketMessageType.Text, true, CancellationToken.None));
             while (true)
             {
