@@ -93,14 +93,16 @@ public class SecretSipsController : ControllerBase
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
             logger.LogInformation("Connection is Websocket");
-            using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-            game.Users.Append(user);
-            var message = Encoding.UTF8.GetBytes("message");
-            game.Users.ToList().ForEach(async user => await user.Socket.SendAsync(message, WebSocketMessageType.Text, false, CancellationToken.None));
+            using var Socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+            user.Socket = Socket;
+            game.Users = game.Users.Append(user);
+            var gameString = JsonSerializer.Serialize(game);
+            var message = Encoding.UTF8.GetBytes(gameString);
+            game.Users.ToList().ForEach(async user => await user.Socket.SendAsync(message, WebSocketMessageType.Text, true, CancellationToken.None));
             while (true)
             {
-                var messageTask = await GetMessage(webSocket);
-                messageTask.Wait();
+                var receivedMessage = await GetMessage(user.Socket);
+                // messageTask.Wait();
             }
             // Draw the rest of the fucking owl
         }
