@@ -89,7 +89,7 @@ public class SecretSipsController : ControllerBase
     } 
 
     private async Task GameLoop(Game game, User user) 
-    {&
+    {
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
             logger.LogInformation("Connection is Websocket");
