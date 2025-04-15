@@ -4,8 +4,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5002
     ports:
-      - "5002:80"
+      - "5002:5002"
     networks:
       - shared-net
     restart: unless-stopped
