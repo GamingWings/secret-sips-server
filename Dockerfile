@@ -5,7 +5,7 @@ WORKDIR /src
 # Copy sln and csproj files first to cache dependencies
 COPY secret-sips-server.sln ./
 COPY SecretSipsServer/*.csproj ./SecretSipsServer/
-RUN dotnet restore ./secret-sips-server.sln
+RUN dotnet restore ./SecretSips.sln
 
 # Copy the rest and build
 COPY . ./
