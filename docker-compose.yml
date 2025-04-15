@@ -1,6 +1,6 @@
 ﻿version: "3.8"
 services:
-  secretsips:
+  secret-sips-server:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,6 +8,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:5002
     ports:
       - "5002:5002"
+    container_name: secret-sips-server
     networks:
       - shared-net
     restart: unless-stopped
