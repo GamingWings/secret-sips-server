@@ -12,7 +12,7 @@ public class CreateGameRequest
     public int MinSecrets { get; set; }
     
     [Required]
-    public int TimerLength { get; set; }
+    public int TimerLength { get; set; } 
     
     public string UserName {get; set; }
 }
