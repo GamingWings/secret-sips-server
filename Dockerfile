@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy sln and csproj files first to cache dependencies
-COPY secret-sips-server.sln ./
+COPY SecretSips.sln ./
 COPY SecretSipsServer/*.csproj ./SecretSipsServer/
 RUN dotnet restore ./SecretSips.sln
 
