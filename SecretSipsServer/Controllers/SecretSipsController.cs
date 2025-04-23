@@ -18,14 +18,14 @@ public class SecretSipsController : ControllerBase
 {
     private readonly ILogger<SecretSipsController> logger;
     private readonly Random random = new Random();
-    private readonly GameDAO dao;
+    private readonly MemoryGameDAO dao;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="dao"></param>
-    public SecretSipsController(ILogger<SecretSipsController> logger, GameDAO dao)
+    public SecretSipsController(ILogger<SecretSipsController> logger, MemoryGameDAO dao)
     {
         this.logger = logger;
         this.dao = dao;
@@ -50,7 +50,7 @@ public class SecretSipsController : ControllerBase
             MinSecrets = request.MinSecrets,
             TimerLength = request.TimerLength
         };
-        await dao.CreateGame(game);
+        dao.CreateGame(game);
         var loop = GameLoop(game, new User {UserName = request.UserName});
         loop.Wait();
     }
@@ -62,7 +62,7 @@ public class SecretSipsController : ControllerBase
     public async Task Join([FromQuery] string UserName, [FromQuery] string Code)
     {
         logger.LogInformation("Received new connection");
-        var game = await dao.GetGame(Code);
+        var game = dao.GetGame(Code);
         if (game == null) 
         {
             logger.LogWarning("Game does not exist");
@@ -81,7 +81,7 @@ public class SecretSipsController : ControllerBase
         {
             code = new string(Enumerable.Repeat(chars, 6)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
-            game = await dao.GetGame(code);
+            game = dao.GetGame(code);
         } while (game != null);
 
         return code;
