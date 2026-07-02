@@ -71,6 +71,12 @@ Things not yet decided — to settle before/while building the game loop:
 
 The code predates most of this document; the game loop itself was never built
 (the original controller ends at `// Draw the rest of the fucking owl`).
+The task backlog lives on the
+[Secret Sips Trello board](https://trello.com/b/n0fLLgii/secret-sips)
+(dormant since May 2025): server-side shared state, join-over-WebSocket,
+real persistence for the in-memory games list, subscriber pattern, secret
+storage; client-side create/join/secret-input/round pages; investigations
+into React Native and NoSQL options.
 
 - **Server** (this repo): rewritten May 2025 from a raw-WebSocket controller
   to HotChocolate GraphQL. Only `createGame` exists; storage is an in-memory
